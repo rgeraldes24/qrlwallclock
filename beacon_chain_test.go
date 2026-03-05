@@ -1,4 +1,4 @@
-package ethwallclock
+package qrlwallclock
 
 import (
 	"sync"
@@ -8,16 +8,16 @@ import (
 
 // MetadataService mocks the metadata service we use across xatu.
 type MetadataService struct {
-	wallclock *EthereumBeaconChain
+	wallclock *QRLBeaconChain
 }
 
 // Wallclock returns the wallclock instance (can be nil).
-func (m *MetadataService) Wallclock() *EthereumBeaconChain {
+func (m *MetadataService) Wallclock() *QRLBeaconChain {
 	return m.wallclock
 }
 
 func TestBeaconChainEventCallbacks(t *testing.T) {
-	beacon := NewEthereumBeaconChain(time.Now(), time.Second*1, 2)
+	beacon := NewQRLBeaconChain(time.Now(), time.Second*1, 2)
 
 	t.Run("Event callbacks", func(t *testing.T) {
 		var (
@@ -60,7 +60,7 @@ func TestBeaconChainEventCallbacks(t *testing.T) {
 // TestConcurrentStopAndCallback tests that there's no race condition
 // between stopping the beacon chain and registering/executing callbacks.
 func TestConcurrentStopAndCallback(t *testing.T) {
-	beacon := NewEthereumBeaconChain(time.Now(), time.Second*1, 2)
+	beacon := NewQRLBeaconChain(time.Now(), time.Second*1, 2)
 
 	// Set up a sync WaitGroup to coordinate goroutines.
 	var wg sync.WaitGroup
@@ -93,7 +93,7 @@ func TestConcurrentStopAndCallback(t *testing.T) {
 func TestNilWallclockScenario(t *testing.T) {
 	// Create a metadata service with a valid wallclock
 	metadata := &MetadataService{
-		wallclock: NewEthereumBeaconChain(time.Now(), time.Second*1, 2),
+		wallclock: NewQRLBeaconChain(time.Now(), time.Second*1, 2),
 	}
 
 	wc := metadata.Wallclock()

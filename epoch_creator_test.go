@@ -1,4 +1,4 @@
-package ethwallclock
+package qrlwallclock
 
 import (
 	"testing"
